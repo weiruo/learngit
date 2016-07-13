@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+  <title>Fingerprintjs2 test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-42202458-2', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <style>
+    body{
+      font-family: sans-serif;
+      max-width: 48em;
+      margin: auto;
+      padding: 0 5%;
+      background: #222;
+      color: #fff;
+    }
+
+    h1 {
+      margin: 2em 0 0;
+    }
+
+    p {
+      font-size: 1.2em
+    }
+
+    button {
+      border: none;
+      color: #fff;
+      font-size: 1.2em;
+      background: #27e;
+      padding: 0.5em 0.75em 0.6em;
+      border-radius: 3px;
+      box-shadow: 0 3px 0 #05c;
+      outline: none;
+    }
+
+    button:active {
+      transform: translateY(3px);
+      box-shadow: none;
+    }
+
+    strong {
+      display: block;
+      letter-spacing: 1px;
+      word-wrap: break-word;
+    }
+
+    @media (min-width: 32em) {
+      h1 {
+        font-size: 4em;
+      }
+
+      strong {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+
+	<form action="welcome.php" method="post">
+	
+		fingerprintjs2: <input id="fingerprint" type="text" name="fingerprint" value=""/><br />
+		useragent: <input id="useragent" type="text" name="useragent" value=""/><br />
+		<!-- ip: <input id="ip" type="text" name="ip" value=""/> -->
+		language: <input id="language" type="text" name="language" value=""/><br />
+		colorDepth: <input id="colorDepth" type="text" name="colorDepth" value=""/><br />
+		pixelRatio: <input id="pixelRatio" type="text" name="pixelRatio" value=""/><br />
+		screenResolution: <input id="screenResolution" type="text" name="screenResolution" value=""/><br />
+		availableScreenResolution: <input id="availableScreenResolution" type="text" name="availableScreenResolution" value=""/><br />
+		timezoneOffset: <input id="timezoneOffset" type="text" name="timezoneOffset" value=""/><br />
+		sessionStorage: <input id="sessionStorage" type="text" name="sessionStorage" value=""/><br />
+		localStorage: <input id="localStorage" type="text" name="localStorage" value=""/><br />
+		indexedDb: <input id="indexedDb" type="text" name="indexedDb" value=""/><br />
+		addBehavior: <input id="addBehavior" type="text" name="addBehavior" value=""/><br />
+		openDatabase: <input id="openDatabase" type="text" name="openDatabase" value=""/><br />
+		cpuClass: <input id="cpuClass" type="text" name="cpuClass" value=""/><br />
+		platform: <input id="platform" type="text" name="platform" value=""/><br />
+		doNotTrack: <input id="doNotTrack" type="text" name="doNotTrack" value=""/><br />
+		plugins: <input id="plugins" type="text" name="plugins" value=""/><br />
+		canvas: <input id="canvas" type="text" name="canvas" value=""/><br />
+		webgl: <input id="webgl" type="text" name="webgl" value=""/><br />
+		adBlock: <input id="adBlock" type="text" name="adBlock" value=""/><br />
+		hasLiedLanguages: <input id="hasLiedLanguages" type="text" name="hasLiedLanguages" value=""/><br />
+		hasLiedResolutio: <input id="hasLiedResolutio" type="text" name="hasLiedResolutio" value=""/><br />
+		hasLiedOs: <input id="hasLiedOs" type="text" name="hasLiedOs" value=""/><br />
+		hasLiedBrowser: <input id="hasLiedBrowser" type="text" name="hasLiedBrowser" value=""/><br />
+		touchSupport: <input id="touchSupport" type="text" name="touchSupport" value=""/><br />
+		
+		
+		
+		<input type="submit" />
+	</form>
+
+  <h1>Fingerprintjs2</h1>
+
+  <p>Your browser fingerprint: <strong id="fp"></strong></p>
+  <p><code id="time"/></p>
+
+  <button type="button" id="btn">Get my fingerprint</button>
+  
+  <script src="fingerprint2.js"></script>
+  <script>
+    $("#btn").on("click", function () {
+      var d1 = new Date();
+      var fp = new Fingerprint2();
+      fp.get(function(result) {
+        var d2 = new Date();
+        var timeString = "Time took to calculate the fingerprint: " + (d2 - d1) + "ms";
+        if(typeof window.console !== "undefined") {
+          console.log(timeString);
+          console.log(result);
+        }
+		//var aa=result;
+        $("#fp").text(result);
+		$("#time").text(timeString);
+		
+        $("#fingerprint").val(result);
+      });
+	  
+	  var keys;
+	  keys=fp.testget(function(result) {
+      });
+	  $("#useragent").val(keys[0].value);
+	  $("#language").val(keys[1].value);
+	  $("#colorDepth").val(keys[2].value);
+	  $("#pixelRatio").val(keys[3].value);
+	  $("#screenResolution").val(keys[4].value);
+	  $("#availableScreenResolution").val(keys[5].value);
+	  $("#timezoneOffset").val(keys[6].value);
+	  $("#sessionStorage").val(keys[7].value);
+	  $("#localStorage").val(keys[8].value);
+	  $("#indexedDb").val(keys[9].value);
+	  $("#addBehavior").val(keys[10].value);
+	  $("#openDatabase").val(keys[11].value);
+	  $("#cpuClass").val(keys[12].value);
+	  $("#platform").val(keys[13].value);
+	  $("#doNotTrack").val(keys[14].value);
+	  $("#plugins").val(keys[15].value);
+	  $("#canvas").val(keys[16].value);
+	  $("#webgl").val(keys[17].value);
+	  $("#adBlock").val(keys[18].value);
+	  $("#hasLiedLanguages").val(keys[19].value);
+	  $("#hasLiedResolutio").val(keys[20].value);
+	  $("#hasLiedOs").val(keys[21].value);
+	  $("#hasLiedBrowser").val(keys[22].value);
+	  $("#touchSupport").val(keys[23].value);
+	  
+    });
+
+  </script>
+</body>
+</html>
